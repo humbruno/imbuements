@@ -6,9 +6,11 @@ import { INGREDIENTS } from "@/lib/constants";
 import { useActiveTab } from "@/lib/hooks/use-active-tab";
 import { motion } from "motion/react";
 import { PropsWithChildren } from "react";
+import { readFromStorage, saveToStorage } from "./lib/utils";
 
 export function App() {
   const { activeTab } = useActiveTab();
+  const storedValues = readFromStorage();
 
   return (
     <main className="p-8 h-screen flex flex-col bg-black font-mono text-white">
@@ -16,9 +18,21 @@ export function App() {
       <div className="m-auto max-w-md space-y-10">
         <TabList />
         <Container>
-          <GoldTokenInput />
+          <GoldTokenInput
+            defaultValue={storedValues["Gold Token"]}
+            onChange={(e) =>
+              saveToStorage({ ["Gold Token"]: parseInt(e.target.value) })
+            }
+          />
           {INGREDIENTS[activeTab].map((v) => (
-            <IngredientInput ingredient={v} key={v.name} />
+            <IngredientInput
+              ingredient={v}
+              key={v.name}
+              defaultValue={storedValues[v.name]}
+              onChange={(e) =>
+                saveToStorage({ [v.name]: parseInt(e.target.value) })
+              }
+            />
           ))}
         </Container>
       </div>

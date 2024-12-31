@@ -1,6 +1,7 @@
 import { NumberInput } from "@/components/number-input";
+import { InputHTMLAttributes } from "react";
 
-export function GoldTokenInput() {
+export function GoldTokenInput(props: InputHTMLAttributes<HTMLInputElement>) {
   return (
     <>
       <div className="flex gap-2 items-center">
@@ -8,7 +9,7 @@ export function GoldTokenInput() {
         <p>Gold Token</p>
       </div>
       <div className="flex mt-2 items-center gap-2">
-        <NumberInput placeholder="41781" />
+        <NumberInput placeholder="41781" {...props} />
         <p>gp</p>
       </div>
     </>
