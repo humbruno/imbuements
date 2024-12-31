@@ -8,8 +8,8 @@ export function TabList() {
 
   return (
     <motion.div
-      initial={{ y: 30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
+      initial={{ y: 30, opacity: 0 }}
       transition={{ type: "spring", duration: 0.5, bounce: 0.6, delay: 0.2 }}
       className="flex items-center bg-gray-600 rounded-lg overflow-hidden"
     >

@@ -1,13 +1,18 @@
 import { type Tab } from "@/lib/constants";
-import { useState } from "react";
+import { useSearchParams } from "react-router";
 
-const DEFAULT_TAB: Tab = "strike";
+const TAB_PARAM_KEY = "tab";
+const DEFAULT_TAB: Record<string, Tab> = { [TAB_PARAM_KEY]: "strike" };
 
 export function useActiveTab() {
-  const [activeTab, setActiveTab] = useState<Tab>(DEFAULT_TAB);
+  const [params, setParams] = useSearchParams(DEFAULT_TAB);
+  const activeTab = params.get(TAB_PARAM_KEY) as Tab;
 
   function setTab(tab: Tab) {
-    setActiveTab(tab);
+    setParams((prev) => {
+      prev.set(TAB_PARAM_KEY, tab);
+      return prev;
+    });
   }
 
   return { activeTab, setTab };
