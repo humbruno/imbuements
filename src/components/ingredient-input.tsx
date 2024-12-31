@@ -20,7 +20,11 @@ export function IngredientInput({ ingredient, ...inputProps }: Props) {
         </p>
       </div>
       <div className="flex mt-2 items-center gap-2">
-        <NumberInput placeholder="41781" {...inputProps} />
+        <NumberInput
+          name={ingredient.name}
+          placeholder="41781"
+          {...inputProps}
+        />
         <p>gp</p>
       </div>
     </div>

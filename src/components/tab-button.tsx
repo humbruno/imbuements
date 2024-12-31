@@ -25,7 +25,7 @@ export function TabButton({ tab, active, className, ...props }: Props) {
           "px-4 flex gap-2 items-center focus-visible:outline-none focus-visible:underline font-mono py-2 relative",
           {
             "text-black bg-transparent": active,
-            "hover:text-gray-400": !active,
+            "hover:text-gray-400 hover:underline": !active,
           },
         )}
       >

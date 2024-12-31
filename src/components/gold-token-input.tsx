@@ -9,7 +9,7 @@ export function GoldTokenInput(props: InputHTMLAttributes<HTMLInputElement>) {
         <p>Gold Token</p>
       </div>
       <div className="flex mt-2 items-center gap-2">
-        <NumberInput placeholder="41781" {...props} />
+        <NumberInput name="Gold Token" placeholder="41781" {...props} />
         <p>gp</p>
       </div>
     </>
