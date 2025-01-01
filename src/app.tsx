@@ -4,15 +4,16 @@ import { RashidWidget } from "@/components/rashid-widget";
 import { TabList } from "@/components/tab-list";
 import { INGREDIENTS } from "@/lib/constants";
 import { useActiveTab } from "@/lib/hooks/use-active-tab";
-import { readFromStorage, saveToStorage } from "@/lib/utils";
+import { readFromStorage, saveToStorage } from "@/lib/storage";
+import { cn, intricate, powerful } from "@/lib/utils";
 import { motion } from "motion/react";
 import { FormEvent, PropsWithChildren, useEffect, useState } from "react";
 
-type Result = "Ingredients" | "Gold Token";
-
 export function App() {
   const [total, setTotal] = useState<number | undefined>(undefined);
-  const [result, setResult] = useState<Result | undefined>(undefined);
+  const [tokenPrice, setTokenPrice] = useState(0);
+
+  const showResult = total !== undefined;
 
   const { activeTab } = useActiveTab();
   const storedValues = readFromStorage();
@@ -21,26 +22,20 @@ export function App() {
     e.preventDefault();
 
     const fd = new FormData(e.target as HTMLFormElement);
-    const goldTokenPrice = fd.get("Gold Token") as string;
-    let sum = 0;
+    const token = fd.get("Gold Token") as string;
+    const goldTokenPrice = Number(token);
 
-    INGREDIENTS[activeTab].forEach((ingredient) => {
-      const val = fd.get(ingredient.name) as string;
-      sum += ingredient.quantity * Number(val);
-    });
+    const sum = INGREDIENTS[activeTab].reduce((prev, curr) => {
+      const val = fd.get(curr.name) as string;
+      return prev + curr.quantity * Number(val);
+    }, 0);
 
+    setTokenPrice(goldTokenPrice);
     setTotal(sum);
-
-    if (sum < Number(goldTokenPrice) * 6) {
-      setResult("Ingredients");
-    } else {
-      setResult("Gold Token");
-    }
   }
 
   useEffect(() => {
     setTotal(undefined);
-    setResult(undefined);
   }, [activeTab]);
 
   return (
@@ -68,14 +63,47 @@ export function App() {
             ))}
             <button
               type="submit"
-              className="bg-white text-black p-4 rounded-lg mt-4 hover:bg-gray-200"
+              className="bg-white text-black  p-4 rounded-lg mt-4 hover:bg-gray-200"
             >
               Calculate
             </button>
           </form>
-          {total !== undefined && (
+          {showResult && (
             <div className="mt-4">
-              <p>Total Cost of Ingredients: {total}gp</p>
+              <p>
+                Total Cost of Ingredients:{" "}
+                <span className="underline text-yellow-400">{total}gp</span>{" "}
+              </p>
+              <p>
+                <span className="font-semibold text-purple-500">
+                  Intricate:{" "}
+                </span>
+                It is cheaper to buy using{" "}
+                <span
+                  className={cn("underline", {
+                    "text-green-400":
+                      intricate(total, tokenPrice) === "ingredients",
+                    "text-yellow-400":
+                      intricate(total, tokenPrice) === "gold token",
+                  })}
+                >
+                  {intricate(total, tokenPrice)}
+                </span>
+              </p>
+              <p>
+                <span className="font-semibold text-rose-500">Powerful: </span>
+                It is cheaper to buy using{" "}
+                <span
+                  className={cn("underline", {
+                    "text-green-400":
+                      intricate(total, tokenPrice) === "ingredients",
+                    "text-yellow-400":
+                      intricate(total, tokenPrice) === "gold token",
+                  })}
+                >
+                  {powerful(total, tokenPrice)}
+                </span>
+              </p>
             </div>
           )}
         </Container>

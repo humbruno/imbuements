@@ -1,8 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-const STORAGE_KEY = "costs";
-
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -20,19 +18,13 @@ export function getDayOfWeek() {
   }
 }
 
-export function saveToStorage(data: object) {
-  const stored = readFromStorage();
-  return localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify({ ...stored, ...data }),
-  );
+type Result = "ingredients" | "gold token";
+
+function calculate(numOfTokens: number) {
+  return function (sum: number, tokenPrice: number): Result {
+    return sum < tokenPrice * numOfTokens ? "ingredients" : "gold token";
+  };
 }
 
-export function readFromStorage() {
-  const stored = localStorage.getItem(STORAGE_KEY);
-  if (stored) {
-    return JSON.parse(stored);
-  } else {
-    return {};
-  }
-}
+export const intricate = calculate(4);
+export const powerful = calculate(6);
