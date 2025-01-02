@@ -35,13 +35,15 @@ export function GalthensSatchelWidget() {
         onClick={updateSatchelDate}
         className="hover:bg-gray-700 transition-colors"
       >
-        <img src="/galthens-satchel.gif" alt="Galthen's Satchel" />
+        <div className="relative">
+          <img src="/galthens-satchel.gif" alt="Galthen's Satchel" />
+          <img
+            src="/click.png"
+            aria-hidden={true}
+            className="absolute right-6 -bottom-14 select-none max-w-52"
+          />
+        </div>
       </button>
-      <img
-        src="/click.png"
-        aria-hidden={true}
-        className="absolute right-36 -bottom-16 max-w-64"
-      />
       <div className="pl-4">
         <p>Last sachel:</p>
         <p className="underline">{resolvedDate}</p>
