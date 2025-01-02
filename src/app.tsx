@@ -101,9 +101,9 @@ export function App() {
                 <span
                   className={cn("underline", {
                     "text-green-400":
-                      intricate(total, tokenPrice) === "ingredients",
+                      powerful(total, tokenPrice) === "ingredients",
                     "text-yellow-400":
-                      intricate(total, tokenPrice) === "gold token",
+                      powerful(total, tokenPrice) === "gold token",
                   })}
                 >
                   {powerful(total, tokenPrice)}
