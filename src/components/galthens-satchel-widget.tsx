@@ -31,21 +31,21 @@ export function GalthensSatchelWidget() {
       }}
       className="flex justify-end items-center relative"
     >
-      <button
-        onClick={updateSatchelDate}
-        className="hover:bg-gray-700 transition-colors"
-      >
-        <div className="relative">
+      <div className="relative">
+        <button
+          onClick={updateSatchelDate}
+          className="hover:bg-gray-700 transition-colors"
+        >
           <img src="/galthens-satchel.gif" alt="Galthen's Satchel" />
-          <img
-            src="/click.png"
-            aria-hidden={true}
-            className="absolute right-6 -bottom-14 select-none max-w-52"
-          />
-        </div>
-      </button>
+        </button>
+        <img
+          src="/click.png"
+          aria-hidden={true}
+          className="absolute -left-48 -bottom-14 select-none max-w-52"
+        />
+      </div>
       <div className="pl-4">
-        <p>Last sachel:</p>
+        <p>Last satchel:</p>
         <p className="underline">{resolvedDate}</p>
       </div>
     </motion.div>

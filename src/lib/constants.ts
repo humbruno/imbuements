@@ -1,3 +1,13 @@
+import bloodyPincers from "@/assets/bloody-pincers.gif";
+import deadBrain from "@/assets/piece-of-dead-brain.gif";
+import protectiveCharm from "@/assets/protective-charm.gif";
+import ropeBelt from "@/assets/rope-belt.gif";
+import sabretooth from "@/assets/sabretooth.gif";
+import silencerClaws from "@/assets/silencer-claws.gif";
+import grimeleechWings from "@/assets/some-grimeleech-wings.gif";
+import vampireTeeth from "@/assets/vampire-teeth.gif";
+import vexclawTalon from "@/assets/vexclaw-talon.gif";
+
 export const TABS = ["strike", "void", "vampirism"] as const;
 export type Tab = (typeof TABS)[number];
 
@@ -21,51 +31,51 @@ export const INGREDIENTS: Record<Tab, Ingredient[]> = {
   void: [
     {
       name: "Rope Belt",
-      imgUrl: "/rope-belt.gif",
+      imgUrl: ropeBelt,
       quantity: 25,
     },
     {
       name: "Silencer Claws",
-      imgUrl: "/silencer-claws.gif",
+      imgUrl: silencerClaws,
       quantity: 25,
     },
     {
       name: "Some Grimeleech Wings",
-      imgUrl: "/some-grimeleech-wings.gif",
+      imgUrl: grimeleechWings,
       quantity: 5,
     },
   ],
   vampirism: [
     {
       name: "Vampire Teeth",
-      imgUrl: "/vampire-teeth.gif",
+      imgUrl: vampireTeeth,
       quantity: 25,
     },
     {
       name: "Bloody Pincers",
-      imgUrl: "/bloody-pincers.gif",
+      imgUrl: bloodyPincers,
       quantity: 15,
     },
     {
       name: "Piece of Dead Brain",
-      imgUrl: "/piece-of-dead-brain.gif",
+      imgUrl: deadBrain,
       quantity: 5,
     },
   ],
   strike: [
     {
       name: "Protective Charm",
-      imgUrl: "/protective-charm.gif",
+      imgUrl: protectiveCharm,
       quantity: 20,
     },
     {
       name: "Sabretooth",
-      imgUrl: "/sabretooth.gif",
+      imgUrl: sabretooth,
       quantity: 25,
     },
     {
       name: "Vexclaw Talon",
-      imgUrl: "/vexclaw-talon.gif",
+      imgUrl: vexclawTalon,
       quantity: 5,
     },
   ],
