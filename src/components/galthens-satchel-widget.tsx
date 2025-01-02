@@ -41,7 +41,7 @@ export function GalthensSatchelWidget() {
         <img
           src="/click.png"
           aria-hidden={true}
-          className="absolute -left-48 -bottom-14 select-none max-w-52"
+          className="absolute -left-48 -bottom-14 select-none pointer-events-none max-w-52"
         />
       </div>
       <div className="pl-4">
