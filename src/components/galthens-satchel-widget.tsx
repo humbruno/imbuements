@@ -1,15 +1,21 @@
 import { readFromStorage, saveToStorage } from "@/lib/storage";
 import { motion } from "motion/react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 export function GalthensSatchelWidget() {
   const storedData = readFromStorage();
-  const lastSatchelDate = new Date(storedData.satchel).toLocaleDateString(
-    "en-GB",
-  );
+  const initialState = storedData.satchel;
+
+  const [satchelDate, setSatchelDate] = useState(initialState);
+
+  const resolvedDate = satchelDate
+    ? new Date(satchelDate).toLocaleDateString("en-GB")
+    : "Not Yet Registered";
 
   function updateSatchelDate() {
     saveToStorage({ satchel: new Date() });
+    setSatchelDate(new Date());
     toast("Satchel date updated");
   }
 
@@ -23,7 +29,7 @@ export function GalthensSatchelWidget() {
         bounce: 0.6,
         delay: 0.8,
       }}
-      className="flex justify-end items-center"
+      className="flex justify-end items-center relative"
     >
       <button
         onClick={updateSatchelDate}
@@ -31,9 +37,14 @@ export function GalthensSatchelWidget() {
       >
         <img src="/galthens-satchel.gif" alt="Galthen's Satchel" />
       </button>
+      <img
+        src="/click.png"
+        aria-hidden={true}
+        className="absolute right-36 -bottom-16 max-w-64"
+      />
       <div className="pl-4">
         <p>Last sachel:</p>
-        <p className="underline">{lastSatchelDate}</p>
+        <p className="underline">{resolvedDate}</p>
       </div>
     </motion.div>
   );
