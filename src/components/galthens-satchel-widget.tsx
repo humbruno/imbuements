@@ -2,6 +2,7 @@ import { readFromStorage, saveToStorage } from "@/lib/storage";
 import { motion } from "motion/react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { DatePicker } from "./date-picker";
 
 export function GalthensSatchelWidget() {
   const storedData = readFromStorage();
@@ -13,9 +14,9 @@ export function GalthensSatchelWidget() {
     ? new Date(satchelDate).toLocaleDateString("en-GB")
     : "Not Yet Registered";
 
-  function updateSatchelDate() {
-    saveToStorage({ satchel: new Date() });
-    setSatchelDate(new Date());
+  function updateSatchelDate(newDate: Date) {
+    saveToStorage({ satchel: newDate });
+    setSatchelDate(newDate);
     toast("Satchel date updated");
   }
 
@@ -32,12 +33,14 @@ export function GalthensSatchelWidget() {
       className="flex justify-end items-center relative"
     >
       <div className="relative">
-        <button
-          onClick={updateSatchelDate}
-          className="hover:bg-gray-700 transition-colors"
+        <DatePicker
+          defaultDate={new Date(initialState)}
+          onChange={updateSatchelDate}
         >
-          <img src="/galthens-satchel.gif" alt="Galthen's Satchel" />
-        </button>
+          <button className="hover:bg-gray-700 transition-colors">
+            <img src="/galthens-satchel.gif" alt="Galthen's Satchel" />
+          </button>
+        </DatePicker>
         <img
           src="/click.png"
           aria-hidden={true}
