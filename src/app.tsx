@@ -1,7 +1,9 @@
+import { GalthensSatchelWidget } from "@/components/galthens-satchel-widget";
 import { GoldTokenInput } from "@/components/gold-token-input";
 import { IngredientInput } from "@/components/ingredient-input";
 import { RashidWidget } from "@/components/rashid-widget";
 import { TabList } from "@/components/tab-list";
+import { Toaster } from "@/components/ui/sonner";
 import { INGREDIENTS } from "@/lib/constants";
 import { useActiveTab } from "@/lib/hooks/use-active-tab";
 import { readFromStorage, saveToStorage } from "@/lib/storage";
@@ -40,7 +42,10 @@ export function App() {
 
   return (
     <main className="p-8 h-screen flex flex-col bg-black font-mono text-white">
-      <RashidWidget />
+      <section className="space-y-4">
+        <RashidWidget />
+        <GalthensSatchelWidget />
+      </section>
       <div className="m-auto max-w-md space-y-10">
         <TabList />
         <Container>
@@ -108,6 +113,7 @@ export function App() {
           )}
         </Container>
       </div>
+      <Toaster />
     </main>
   );
 }
