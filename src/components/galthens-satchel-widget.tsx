@@ -1,8 +1,9 @@
+import { DatePicker } from "@/components/date-picker";
 import { readFromStorage, saveToStorage } from "@/lib/storage";
+import { addDays, format as formatDate, isPast } from "date-fns";
 import { motion } from "motion/react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { DatePicker } from "./date-picker";
 
 export function GalthensSatchelWidget() {
   const storedData = readFromStorage();
@@ -11,8 +12,11 @@ export function GalthensSatchelWidget() {
   const [satchelDate, setSatchelDate] = useState(initialState);
 
   const resolvedDate = satchelDate
-    ? new Date(satchelDate).toLocaleDateString("en-GB")
-    : "Not Yet Registered";
+    ? formatDate(satchelDate, "dd/MM/yyyy")
+    : "Not Registered";
+
+  const availableDate = addDays(satchelDate, 30);
+  const isAvailable = isPast(availableDate);
 
   function updateSatchelDate(newDate: Date) {
     saveToStorage({ satchel: newDate });
@@ -50,6 +54,9 @@ export function GalthensSatchelWidget() {
       <div className="pl-4">
         <p>Last satchel:</p>
         <p className="underline">{resolvedDate}</p>
+        {isAvailable && (
+          <p className="animate-pulse text-green-400">Available!</p>
+        )}
       </div>
     </motion.div>
   );
