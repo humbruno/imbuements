@@ -15,6 +15,7 @@ export type Ingredient = {
   name: string;
   imgUrl: string;
   quantity: number;
+  stage: 1 | 2 | 3;
 };
 
 export const RASHID: Map<number, string> = new Map([
@@ -33,16 +34,19 @@ export const INGREDIENTS: Record<Tab, Ingredient[]> = {
       name: "Rope Belt",
       imgUrl: ropeBelt,
       quantity: 25,
+      stage: 1,
     },
     {
       name: "Silencer Claws",
       imgUrl: silencerClaws,
       quantity: 25,
+      stage: 2,
     },
     {
       name: "Some Grimeleech Wings",
       imgUrl: grimeleechWings,
       quantity: 5,
+      stage: 3,
     },
   ],
   vampirism: [
@@ -50,16 +54,19 @@ export const INGREDIENTS: Record<Tab, Ingredient[]> = {
       name: "Vampire Teeth",
       imgUrl: vampireTeeth,
       quantity: 25,
+      stage: 1,
     },
     {
       name: "Bloody Pincers",
       imgUrl: bloodyPincers,
       quantity: 15,
+      stage: 2,
     },
     {
       name: "Piece of Dead Brain",
       imgUrl: deadBrain,
       quantity: 5,
+      stage: 3,
     },
   ],
   strike: [
@@ -67,16 +74,19 @@ export const INGREDIENTS: Record<Tab, Ingredient[]> = {
       name: "Protective Charm",
       imgUrl: protectiveCharm,
       quantity: 20,
+      stage: 1,
     },
     {
       name: "Sabretooth",
       imgUrl: sabretooth,
       quantity: 25,
+      stage: 2,
     },
     {
       name: "Vexclaw Talon",
       imgUrl: vexclawTalon,
       quantity: 5,
+      stage: 3,
     },
   ],
 };

@@ -11,7 +11,7 @@ export function GoldTokenInput(props: InputHTMLAttributes<HTMLInputElement>) {
       </div>
       <div className="flex mt-2 items-center gap-2">
         <NumberInput name="Gold Token" placeholder="41781" {...props} />
-        <p>gp</p>
+        <p>gp/each</p>
       </div>
     </>
   );

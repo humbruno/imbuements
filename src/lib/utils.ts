@@ -18,13 +18,20 @@ export function getDayOfWeek() {
   }
 }
 
-type Result = "ingredients" | "gold token";
+type Result = "ingredients" | "gold tokens";
 
 function calculate(numOfTokens: number) {
   return function (sum: number, tokenPrice: number): Result {
-    return sum < tokenPrice * numOfTokens ? "ingredients" : "gold token";
+    return sum < tokenPrice * numOfTokens ? "ingredients" : "gold tokens";
   };
 }
 
 export const intricate = calculate(4);
 export const powerful = calculate(6);
+
+export function formatNumber(value: number): string {
+  return new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 20,
+  }).format(value);
+}

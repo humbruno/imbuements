@@ -1,3 +1,5 @@
+import goldToken from "@/assets/gold-token.png";
+import grimeleechWings from "@/assets/some-grimeleech-wings.gif";
 import { GalthensSatchelWidget } from "@/components/galthens-satchel-widget";
 import { GoldTokenInput } from "@/components/gold-token-input";
 import { IngredientInput } from "@/components/ingredient-input";
@@ -7,46 +9,73 @@ import { Toaster } from "@/components/ui/sonner";
 import { INGREDIENTS } from "@/lib/constants";
 import { useActiveTab } from "@/lib/hooks/use-active-tab";
 import { readFromStorage, saveToStorage } from "@/lib/storage";
-import { cn, intricate, powerful } from "@/lib/utils";
+import { cn, formatNumber, intricate, powerful } from "@/lib/utils";
 import { motion } from "motion/react";
 import { FormEvent, PropsWithChildren, useEffect, useState } from "react";
 
-export function App() {
-  const [total, setTotal] = useState<number | undefined>(undefined);
-  const [tokenPrice, setTokenPrice] = useState(0);
+type ResultState =
+  | {
+      intricate: number;
+      powerful: number;
+      goldTokenPrice: number;
+    }
+  | undefined;
 
-  const showResult = total !== undefined;
+export function App() {
+  const [result, setResult] = useState<ResultState>(undefined);
 
   const { activeTab } = useActiveTab();
   const storedValues = readFromStorage();
+
+  const intricateResult =
+    result !== undefined
+      ? intricate(result?.intricate, result?.goldTokenPrice)
+      : undefined;
+  const powerfulResult =
+    result !== undefined
+      ? powerful(result?.powerful, result?.goldTokenPrice)
+      : undefined;
+
+  const showResult =
+    result !== undefined && !!powerfulResult && !!intricateResult;
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const fd = new FormData(e.target as HTMLFormElement);
     const token = fd.get("Gold Token") as string;
-    const goldTokenPrice = Number(token);
 
-    const sum = INGREDIENTS[activeTab].reduce((prev, curr) => {
-      const val = fd.get(curr.name) as string;
-      return prev + curr.quantity * Number(val);
-    }, 0);
+    const goldTokenPrice = token ? Number(token) : 0;
+    let intricateSum = 0;
+    let powerfulSum = 0;
 
-    setTokenPrice(goldTokenPrice);
-    setTotal(sum);
+    INGREDIENTS[activeTab].forEach((i) => {
+      const val = fd.get(i.name) as string;
+      const valAsInt = val ? Number(val) : 0;
+      const ingredientTotal = valAsInt * i.quantity;
+
+      powerfulSum += ingredientTotal;
+      if (i.stage < 3) intricateSum += ingredientTotal;
+    });
+
+    setResult({
+      intricate: intricateSum,
+      powerful: powerfulSum,
+      goldTokenPrice,
+    });
   }
 
   useEffect(() => {
-    setTotal(undefined);
+    setResult(undefined);
   }, [activeTab]);
 
   return (
-    <main className="p-8 h-screen flex flex-col bg-black font-mono text-white">
+    <main className="p-8 min-h-screen flex flex-col bg-black font-mono text-white">
       <section className="space-y-4">
         <RashidWidget />
         <GalthensSatchelWidget />
       </section>
-      <div className="m-auto max-w-md space-y-10">
+      <div className="m-auto space-y-10">
         <TabList />
         <Container>
           <form onSubmit={handleSubmit}>
@@ -68,7 +97,7 @@ export function App() {
             ))}
             <button
               type="submit"
-              className="bg-white text-black  p-4 rounded-lg mt-4 hover:bg-gray-200"
+              className="bg-white text-black focus-visible:underline focus-visible:outline-none p-4 rounded-lg mt-4 hover:bg-gray-200"
             >
               Calculate
             </button>
@@ -76,38 +105,42 @@ export function App() {
           {showResult && (
             <div className="mt-4">
               <p>
-                Total Cost of Ingredients:{" "}
-                <span className="underline text-yellow-400">{total}gp</span>{" "}
-              </p>
-              <p>
                 <span className="font-semibold text-purple-500">
                   Intricate:{" "}
                 </span>
                 It is cheaper to buy using{" "}
                 <span
                   className={cn("underline", {
-                    "text-green-400":
-                      intricate(total, tokenPrice) === "ingredients",
-                    "text-yellow-400":
-                      intricate(total, tokenPrice) === "gold token",
+                    "text-green-400": intricateResult === "ingredients",
+                    "text-yellow-400": intricateResult === "gold tokens",
                   })}
                 >
-                  {intricate(total, tokenPrice)}
+                  {intricateResult}
                 </span>
+              </p>
+              <p>
+                (<img src={grimeleechWings} className="inline" />
+                {formatNumber(result.intricate)}gp vs 4x
+                <img src={goldToken} className="inline" />
+                {formatNumber(result.goldTokenPrice * 4)}gp)
               </p>
               <p>
                 <span className="font-semibold text-rose-500">Powerful: </span>
                 It is cheaper to buy using{" "}
                 <span
                   className={cn("underline", {
-                    "text-green-400":
-                      powerful(total, tokenPrice) === "ingredients",
-                    "text-yellow-400":
-                      powerful(total, tokenPrice) === "gold token",
+                    "text-green-400": powerfulResult === "ingredients",
+                    "text-yellow-400": powerfulResult === "gold tokens",
                   })}
                 >
-                  {powerful(total, tokenPrice)}
+                  {powerfulResult}
                 </span>
+              </p>
+              <p>
+                (<img src={grimeleechWings} className="inline" />
+                {formatNumber(result.powerful)}gp vs 6x
+                <img src={goldToken} className="inline" />
+                {formatNumber(result.goldTokenPrice * 6)}gp)
               </p>
             </div>
           )}

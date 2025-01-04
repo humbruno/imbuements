@@ -25,7 +25,7 @@ export function IngredientInput({ ingredient, ...inputProps }: Props) {
           placeholder="41781"
           {...inputProps}
         />
-        <p>gp</p>
+        <p>gp/each</p>
       </div>
     </div>
   );
