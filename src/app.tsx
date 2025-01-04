@@ -120,7 +120,7 @@ export function App() {
               </p>
               <p>
                 (<img src={grimeleechWings} className="inline" />
-                {formatNumber(result.intricate)}gp vs 4x
+                {formatNumber(result.intricate)}gp vs
                 <img src={goldToken} className="inline" />
                 {formatNumber(result.goldTokenPrice * 4)}gp)
               </p>
@@ -138,7 +138,7 @@ export function App() {
               </p>
               <p>
                 (<img src={grimeleechWings} className="inline" />
-                {formatNumber(result.powerful)}gp vs 6x
+                {formatNumber(result.powerful)}gp vs
                 <img src={goldToken} className="inline" />
                 {formatNumber(result.goldTokenPrice * 6)}gp)
               </p>
