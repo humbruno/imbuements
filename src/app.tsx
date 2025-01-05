@@ -103,7 +103,17 @@ export function App() {
             </button>
           </form>
           {showResult && (
-            <div className="mt-4">
+            <motion.div
+              key={result.intricate + result.goldTokenPrice + result.powerful}
+              animate={{ x: 0, opacity: 1 }}
+              initial={{ x: 30, opacity: 0 }}
+              transition={{
+                type: "spring",
+                duration: 0.5,
+                bounce: 0.6,
+              }}
+              className="mt-4"
+            >
               <p>
                 <span className="font-semibold text-purple-500">
                   Intricate:{" "}
@@ -120,7 +130,7 @@ export function App() {
               </p>
               <p>
                 (<img src={grimeleechWings} className="inline" />
-                {formatNumber(result.intricate)}gp vs
+                {formatNumber(result.intricate)}gp vs{" "}
                 <img src={goldToken} className="inline" />
                 {formatNumber(result.goldTokenPrice * 4)}gp)
               </p>
@@ -138,11 +148,11 @@ export function App() {
               </p>
               <p>
                 (<img src={grimeleechWings} className="inline" />
-                {formatNumber(result.powerful)}gp vs
+                {formatNumber(result.powerful)}gp vs{" "}
                 <img src={goldToken} className="inline" />
                 {formatNumber(result.goldTokenPrice * 6)}gp)
               </p>
-            </div>
+            </motion.div>
           )}
         </Container>
       </div>
