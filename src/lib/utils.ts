@@ -1,21 +1,32 @@
 import { clsx, type ClassValue } from "clsx";
+import { getDay, subDays } from "date-fns";
 import { twMerge } from "tailwind-merge";
+
+const SERVER_SAVE_HOUR = 10;
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+function isBeforeServerSave() {
+  const timeInGermany = getCurrentHourInGermany();
+  return timeInGermany < SERVER_SAVE_HOUR;
+}
+
+function getCurrentHourInGermany() {
+  const germanyTime = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Europe/Berlin",
+    hour: "2-digit",
+    hourCycle: "h23",
+  }).format(new Date());
+
+  return Number(germanyTime);
+}
+
 export function getDayOfWeek() {
   const today = new Date();
-  const hour = today.getHours();
-
-  if (hour < 9) {
-    // account for server save at 9am (my local time)
-    // refactor this to work on any timezone? idk
-    return today.getDay() - 1;
-  } else {
-    return today.getDay();
-  }
+  const yesterday = subDays(today, 1);
+  return isBeforeServerSave() ? getDay(yesterday) : getDay(today);
 }
 
 type Result = "ingredients" | "gold tokens";

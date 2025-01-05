@@ -19,7 +19,7 @@ export function RashidWidget() {
     >
       <img src="/rashid.gif" alt="Rashid" />
       <p>
-        -&gt; <span className="underline">{RASHID.get(today)}</span>
+        -&gt; <span className="underline">{RASHID[today]}</span>
       </p>
     </motion.div>
   );

@@ -18,15 +18,15 @@ export type Ingredient = {
   stage: 1 | 2 | 3;
 };
 
-export const RASHID: Map<number, string> = new Map([
-  [1, "Svargrond"],
-  [2, "Liberty Bay"],
-  [3, "Port Hope"],
-  [4, "Ankrahmun"],
-  [5, "Darashia"],
-  [6, "Edron"],
-  [7, "Carlin"],
-]);
+export const RASHID = [
+  "Carlin",
+  "Svargrond",
+  "Liberty Bay",
+  "Port Hope",
+  "Ankrahmun",
+  "Darashia",
+  "Edron",
+];
 
 export const INGREDIENTS: Record<Tab, Ingredient[]> = {
   void: [
