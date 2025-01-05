@@ -24,9 +24,9 @@ function getCurrentHourInGermany() {
 }
 
 export function getDayOfWeek() {
-  const today = new Date();
-  const yesterday = subDays(today, 1);
-  return isBeforeServerSave() ? getDay(yesterday) : getDay(today);
+  const now = new Date();
+  const yesterday = subDays(now, 1);
+  return isBeforeServerSave() ? getDay(yesterday) : getDay(now);
 }
 
 type Result = "ingredients" | "gold tokens";
